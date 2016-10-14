@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>The HTML5 Herald</title>
+    <meta name="description" content="The HTML5 Herald">
+    <meta name="author" content="SitePoint">
+    <style>
+      body, html {
+        align-items: center;
+        background-color: #ffc20e;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        margin: 0;
+        padding: 0;
+      }
+
+      h1 {
+        color: #333333;
+        font-family: 'Helvetica Neue', Helvetica, sans-serif;
+        font-size: 70px;
+        font-style: normal;
+        font-variant-caps: normal;
+        font-weight: bold;
+        letter-spacing: -4px;
+        line-height: 78px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="fn-message"></h1>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io('http://localhost:5000');
+      var timer = null;
+      var messageElem = document.querySelector('.fn-message');
+      socket.on('message', function (data) {
+        clearTimeout(timer);
+        messageElem.innerHTML = data.message;
+        timer = setTimeout(function () {
+          messageElem.innerHTML = '';
+        }, 5000);
+      });
+    </script>
+  </body>
+</html>
